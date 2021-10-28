@@ -1,0 +1,26 @@
+{
+  "name": "cpsc-314-web-development-final-project-sblevens",
+  "version": "1.0.0",
+  "description": "book-review-mean",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gonzaga-CPSC-Fall-2021-Olivares/cpsc-314-web-development-final-project-sblevens.git"
+  },
+  "author": "Sam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gonzaga-CPSC-Fall-2021-Olivares/cpsc-314-web-development-final-project-sblevens/issues"
+  },
+  "homepage": "https://github.com/Gonzaga-CPSC-Fall-2021-Olivares/cpsc-314-web-development-final-project-sblevens#readme"
+}

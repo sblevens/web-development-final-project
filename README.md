@@ -6,8 +6,10 @@ Description:
 Installation: 
 Usage:
 
-my notes / starting:
+
+my notes:
+loosely followed this for initial generation https://www.youtube.com/watch?v=wtIvu085uU0 
+>>npm install express --save
 >>npm install -g @angular/cli
->>ng new book-review - this gave basic template
->>ng serve
->>udpate launch.json
+>>npm install mongoose --save
+>>npm install cors body-parser --save
