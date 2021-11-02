@@ -11,6 +11,7 @@ td {
 }
 th {
     background-color: rgb(99, 160, 180);
+    padding: 5px;
 }
 tr {
     background-color: lightblue;
@@ -44,4 +45,10 @@ tr:nth-child(even){
     margin: 6px 0;
     border: 1px solid #aaa;
     border-radius: 4px;
+}
+
+.glyphicon{
+    float: right;
+    padding-right: 5px;
+
 }

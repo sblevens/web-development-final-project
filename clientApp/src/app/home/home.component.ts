@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sortRating();
   }
 
   search: string = '';
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   book_author: string = '';
   book_rating: number = 1;
   book_review: string = '';
+  sort_ascending: boolean = false;
 
   
   books = [
@@ -54,7 +56,31 @@ export class HomeComponent implements OnInit {
     this.adding_review = false;
   }
 
-  
+  sortRating(){
+    if(this.sort_ascending){
+      this.books.sort((a,b) => {
+        if(a.rating > b.rating){
+          return 1;
+        }
+        if(a.rating < b.rating){
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      this.books.sort((a,b) => {
+        if(a.rating < b.rating){
+          return 1;
+        }
+        if(a.rating > b.rating){
+          return -1;
+        }
+        return 0;
+      });
+    }
+    this.sort_ascending = !this.sort_ascending;
+    
+  }
 
 
   

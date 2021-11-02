@@ -8,7 +8,7 @@
         <tr>
             <th>Name</th>
             <th>Author</th>
-            <th>Rating</th>
+            <th>Rating <i (click)="sortRating()" *ngIf="!sort_ascending" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortRating()" *ngIf="sort_ascending" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
         </tr>
     </thead>
     <tbody>
