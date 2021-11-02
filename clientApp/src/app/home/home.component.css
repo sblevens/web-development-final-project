@@ -1,0 +1,47 @@
+table {
+    width: auto;
+    text-align: left;
+    table-layout: fixed;
+    border: 2px solid black;
+}
+
+td {
+    /* padding: 5px; */
+    width: 200px;
+}
+th {
+    background-color: rgb(99, 160, 180);
+}
+tr {
+    background-color: lightblue;
+}
+tr:nth-child(even){
+    background-color: rgb(228, 242, 247);
+}
+
+.inputs{
+
+}
+
+#input_review label {
+    padding: 5px;
+    width: 50px;
+    margin-right: 5px;
+    display: inline-block;
+    text-align: right;
+}
+
+#input_review input {
+    width: 250px;
+}
+
+#input_review select {
+    width: 100px;
+}
+
+#input_review input, select {
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
