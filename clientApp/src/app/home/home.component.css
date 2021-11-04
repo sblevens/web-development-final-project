@@ -45,7 +45,10 @@ tr:nth-child(even){
 }
 
 .glyphicon{
-    float: right;
     padding-right: 5px;
 
+}
+
+#ratings {
+    float: none;
 }
