@@ -22,17 +22,19 @@ export class HomeComponent implements OnInit {
   book_author: string = '';
   book_rating: number = 1;
   book_review: string = '';
+  book_favorited: boolean = false;
   sort_ascending: boolean = false;
+  sort_favorited: boolean = false;
 
   
   books = [
-    {name: 'Frog and Toad',author: 'Tom Riddle',rating:5},
-    {name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3},
-    {name: 'Little Women',author: 'Jo March',rating:5},
-    {name: 'Name of the Wind',author: 'Katie Stevens',rating:4},
-    {name: 'Twilight',author: 'Stephanie Myers',rating:5},
-    {name: 'Harry Potter',author: 'JK Rowl',rating:5},
-    {name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5}
+    {name: 'Frog and Toad',author: 'Tom Riddle',rating:5,favorited:false},
+    {name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3,favorited:false},
+    {name: 'Little Women',author: 'Jo March',rating:5,favorited:false},
+    {name: 'Name of the Wind',author: 'Katie Stevens',rating:4,favorited:false},
+    {name: 'Twilight',author: 'Stephanie Myers',rating:5,favorited:false},
+    {name: 'Harry Potter',author: 'JK Rowl',rating:5,favorited:true},
+    {name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5,favorited:false}
 
   ];
 
@@ -47,7 +49,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-    let book = {name: this.book_name, author: this.book_author, rating: this.book_rating};
+    let book = {name: this.book_name, author: this.book_author, rating: this.book_rating, favorited: this.book_favorited};
     this.books.push(book);
     this.book_name = '';
     this.book_author = '';
@@ -82,6 +84,30 @@ export class HomeComponent implements OnInit {
     
   }
 
+  sortFavorited(){
+    if(this.sort_favorited){
+      this.books.sort((a,b)=>{
+        if(a.favorited > b.favorited){
+          return 1;
+        }
+        if(a.favorited < b.favorited){
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      this.books.sort((a,b)=>{
+        if(a.favorited < b.favorited){
+          return 1;
+        }
+        if(a.favorited > b.favorited){
+          return -1;
+        }
+        return 0;
+      });
+    }
+    this.sort_favorited = !this.sort_favorited;
+  }
 
   
 

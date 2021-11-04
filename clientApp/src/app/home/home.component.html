@@ -9,6 +9,7 @@
             <th>Name</th>
             <th>Author</th>
             <th>Rating <i (click)="sortRating()" *ngIf="!sort_ascending" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortRating()" *ngIf="sort_ascending" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
+            <th>Favorited <i (click)="sortFavorited()" *ngIf="!sort_favorited" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortFavorited()" *ngIf="sort_favorited" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
             <td>{{book.name}}</td>
             <td>{{book.author}}</td>
             <td>{{book.rating}}</td>
+            <td><input [(ngModel)]="book.favorited" type="checkbox"></td>
         </tr>
     </tbody>
 </table>

@@ -31,6 +31,8 @@ const port = 3000;
 app.use(cors());
 
 //body - parser
+// use 
+//express.urlencoded({extended: true});
 app.use(bodyparser.json());
 
 //static files
