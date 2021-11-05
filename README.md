@@ -2,14 +2,39 @@
 cpsc-314-web-development-final-project-sblevens created by GitHub Classroom
 
 Project Name: Book Review
-Description:
-Installation: 
-Usage:
+
+Description: See reviews for books
+Initial start up code loosely followed this tutorial:
+https://www.youtube.com/watch?v=wtIvu085uU0
+
+Table of Contents: N/A
 
 
-my notes:
-loosely followed this for initial generation https://www.youtube.com/watch?v=wtIvu085uU0 
+Installation: Below are the npm additions I have installed for this project:
 >>npm install express --save
+
 >>npm install -g @angular/cli
+
 >>npm install mongoose --save
->>npm install cors body-parser --save
+
+>>npm install cors --save
+
+
+
+Usage: With no database implemented yet, all we have to do is start the front-end
+Within the ClientApp folder run the following command
+>>ng serve
+
+It will open on http://localhost:4200/
+
+
+Contributing:
+Contributions not accepted
+
+
+Credits:
+Sami Blevens
+
+
+License:
+No license
