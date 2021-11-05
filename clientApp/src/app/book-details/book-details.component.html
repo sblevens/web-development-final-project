@@ -1,12 +1,12 @@
 <table>
     <thead>
         <tr>
-            <th><h1>Reviews</h1></th>
+            <th><h1>Reviews</h1><h2>{{display_name[0]}}</h2></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let r of display_reviews[0]">
-            <td>{{r}}</td>
+        <tr *ngFor="let r of display_reviews[0], let i = index">
+            <td>{{r}}<span id="author">{{display_author[0][i]}}</span></td>
         </tr>
     </tbody>
 </table>
