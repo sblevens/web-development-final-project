@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
     this.sortRating();
   }
 
+  new_id: number = 8;
   search_book: string = '';
   search_author: string = '';
   adding_review = false;
@@ -29,13 +30,13 @@ export class HomeComponent implements OnInit {
 
   
   books = [
-    {name: 'Frog and Toad',author: 'Tom Riddle',rating:5,favorited:false},
-    {name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3,favorited:false},
-    {name: 'Little Women',author: 'Jo March',rating:5,favorited:false},
-    {name: 'Name of the Wind',author: 'Katie Stevens',rating:4,favorited:false},
-    {name: 'Twilight',author: 'Stephanie Myers',rating:5,favorited:false},
-    {name: 'Harry Potter',author: 'JK Rowl',rating:5,favorited:true},
-    {name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5,favorited:false}
+    {id: 1, name: 'Frog and Toad',author: 'Tom Riddle',rating:5,favorited:false},
+    {id: 2,name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3,favorited:false},
+    {id: 3,name: 'Little Women',author: 'Jo March',rating:5,favorited:false},
+    {id: 4,name: 'Name of the Wind',author: 'Katie Stevens',rating:4,favorited:false},
+    {id: 5,name: 'Twilight',author: 'Stephanie Myers',rating:5,favorited:false},
+    {id: 6,name: 'Harry Potter',author: 'JK Rowl',rating:5,favorited:true},
+    {id: 7,name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5,favorited:false}
 
   ];
 
@@ -50,8 +51,9 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-    let book = {name: this.book_name, author: this.book_author, rating: this.book_rating, favorited: this.book_favorited};
+    let book = {id: this.new_id, name: this.book_name, author: this.book_author, rating: this.book_rating, favorited: this.book_favorited};
     this.books.push(book);
+    this.new_id = this.new_id + 1;
     this.book_name = '';
     this.book_author = '';
     this.book_rating = 1;

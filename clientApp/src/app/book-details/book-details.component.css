@@ -1,0 +1,29 @@
+table {
+    width:95%;
+    margin: auto;
+    padding: 10px;
+
+    text-align: center;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    /*border: 2px solid rgba(153, 152, 152, 0.425);*/
+}
+
+td {
+    background-color: rgb(197, 217, 255);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px lightslategrey;
+
+}
+
+
+th {
+    background-color: rgb(131, 171, 245);
+    border-radius: 5px;
+    padding: 5px;
+}
+

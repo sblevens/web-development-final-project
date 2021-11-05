@@ -7,17 +7,20 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SearchBooksPipe } from './pipes/search-books.pipe';
+import { BookDetailsComponent } from './book-details/book-details.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full'}
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'detail/:id', component: BookDetailsComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SearchBooksPipe
+    SearchBooksPipe,
+    BookDetailsComponent
   ],
   imports: [
     BrowserModule,
