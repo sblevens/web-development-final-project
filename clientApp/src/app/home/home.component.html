@@ -17,7 +17,7 @@
         <tr *ngFor="let book of books | searchBooks: search_book:search_author">
             <td>{{book.name}}</td>
             <td>{{book.author}}</td>
-            <td id="ratings"><i *ngFor="let i of [].constructor(book.rating)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-book.rating)" class="glyphicon glyphicon-star-empty"></i></td>
+            <td id="ratings"><i *ngFor="let i of [].constructor(book.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-book.rating)" class="glyphicon glyphicon-star-empty"></i></td>
             <td><input [(ngModel)]="book.favorited" type="checkbox"></td>
         </tr>
     </tbody>
