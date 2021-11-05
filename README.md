@@ -7,6 +7,9 @@ Description: See reviews for books
 Initial start up code loosely followed this tutorial:
 https://www.youtube.com/watch?v=wtIvu085uU0
 
+Table of Contents: N/A
+
+
 Installation: Below are the npm additions I have installed for this project:
 >>npm install express --save
 
@@ -17,8 +20,21 @@ Installation: Below are the npm additions I have installed for this project:
 >>npm install cors --save
 
 
+
 Usage: With no database implemented yet, all we have to do is start the front-end
 Within the ClientApp folder run the following command
 >>ng serve
 
 It will open on http://localhost:4200/
+
+
+Contributing:
+Contributions not accepted
+
+
+Credits:
+Sami Blevens
+
+
+License:
+No license
