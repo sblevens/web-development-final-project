@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
     this.sortRating();
   }
 
-  search: string = '';
+  search_book: string = '';
+  search_author: string = '';
   adding_review = false;
   book_name: string = '';
   book_author: string = '';

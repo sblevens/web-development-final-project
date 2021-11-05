@@ -1,6 +1,7 @@
 <h1>Books</h1>
 <div>
-    <input type="text" name="search" placeholder="search books" [(ngModel)]="search">
+    <input type="text" name="search_book" placeholder="search books" [(ngModel)]="search_book">
+    <input type="text" name="search_author" placeholder="search author" [(ngModel)]="search_author">
 </div>
 
 <table>
@@ -13,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let book of books | searchBooks: search">
+        <tr *ngFor="let book of books | searchBooks: search_book:search_author">
             <td>{{book.name}}</td>
             <td>{{book.author}}</td>
             <td id="ratings"><i *ngFor="let i of [].constructor(book.rating)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-book.rating)" class="glyphicon glyphicon-star-empty"></i></td>
