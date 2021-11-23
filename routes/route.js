@@ -11,6 +11,10 @@ router.get('/contacts', (req,res,next) => {
     // });
 });
 
+router.get('/books', (req,res,next)=> {
+    res.send('getting books');
+})
+
 //add data
 router.post('/contact',(req,res,next)=>{
     //logic to add data

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchBooksPipe } from '../pipes/search-books.pipe';
+import {BookService} from '../book.service';
+import {Book} from '../model/book';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +10,9 @@ import { SearchBooksPipe } from '../pipes/search-books.pipe';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { 
+  constructor(private bservice: BookService) { 
     // this.adding_review = false;
+    this.books = [];
   }
 
   ngOnInit(): void {
@@ -27,9 +30,9 @@ export class HomeComponent implements OnInit {
   book_favorited: boolean = false;
   sort_ascending: boolean = false;
   sort_favorited: boolean = false;
-
+  books: Book[];
   
-  books = [
+  old_books = [
     {id: 1, name: 'Frog and Toad',author: 'Tom Riddle',rating:5,favorited:false},
     {id: 2,name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3,favorited:false},
     {id: 3,name: 'Little Women',author: 'Jo March',rating:5,favorited:false},
@@ -39,6 +42,17 @@ export class HomeComponent implements OnInit {
     {id: 7,name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5,favorited:false}
 
   ];
+  
+  assignBooks(r: Object[]) {
+    let books = r;
+  }
+  getBooks(){
+    this.bservice.getBooks().subscribe((result: any) => {
+      this.books = result;
+      console.log("assign b: " + result);
+      console.log(JSON.stringify(result));
+    });
+  }
 
   toggleShow(){
     this.adding_review = !this.adding_review;
@@ -64,26 +78,31 @@ export class HomeComponent implements OnInit {
   sortRating(){
     if(this.sort_ascending){
       this.books.sort((a,b) => {
-        if(a.rating > b.rating){
-          return 1;
-        }
-        if(a.rating < b.rating){
-          return -1;
+        if(a.rating && b.rating){
+          if(a.rating > b.rating){
+            return 1;
+          }
+          if(a.rating < b.rating){
+            return -1;
+          }
         }
         return 0;
       });
     } else {
       this.books.sort((a,b) => {
-        if(a.rating < b.rating){
-          return 1;
-        }
-        if(a.rating > b.rating){
-          return -1;
+        if(a.rating && b.rating){
+          if(a.rating < b.rating){
+            return 1;
+          }
+          if(a.rating > b.rating){
+            return -1;
+          }
         }
         return 0;
       });
     }
     this.sort_ascending = !this.sort_ascending;
+    
     
   }
 
