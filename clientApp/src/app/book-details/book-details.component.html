@@ -1,12 +1,17 @@
 <table>
     <thead>
         <tr>
-            <th><h1>Reviews</h1><h2>{{display_name[0]}}</h2></th>
+            <th><h1>Reviews</h1><h2>{{display_name}}</h2></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let r of display_reviews[0], let i = index">
-            <td>{{r}}<span id="author">{{display_author[0][i]}}</span></td>
+        <tr *ngFor="let r of display_review, let i = index">
+            <td>
+                <p>{{r.review}}
+                    <span id="review_stars"><i *ngFor="let i of [].constructor(r.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-r.rating)" class="glyphicon glyphicon-star-empty"></i></span>
+                </p>
+                <span id="author"><em>{{r.review_author}}</em></span>
+            </td>
         </tr>
     </tbody>
 </table>

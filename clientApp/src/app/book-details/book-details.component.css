@@ -27,7 +27,6 @@ th {
     padding: 5px;
 }
 
-#author{
+#review_stars, #author {
     float: right;
 }
-

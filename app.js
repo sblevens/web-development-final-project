@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 8080;
 
 var ObjectId = require("mongodb").ObjectId;
 const { mongo } = require('mongoose');
+// const { db } = require('./models/contact');
 
 const client = new MongoClient(url, {
     useNewUrlParser: true,
@@ -23,8 +24,12 @@ const client = new MongoClient(url, {
 });
 
 client.connect(err => {
-    db = client.db(DB_NAME).collection("Books");
+    dbBooks = client.db(DB_NAME).collection("Books");
 });
+
+client.connect(err => {
+    dbReviews = client.db(DB_NAME).collection("Reviews");
+})
 
 // mongoose.set('useNewUrlParser',true);
 // mongoose.set('useFindAndModify',false);
@@ -76,15 +81,25 @@ var books;
 
 app.get("/books",(req,res)=>{
     console.log("in show");
-    db.find().toArray((err, results) => {
+    dbBooks.find().toArray((err, results) => {
         if(err) return console.log("error: " + err);
         this.books = results;
-        // console.log("results: "+ JSON.stringify(result));
         console.log("books: "+ this.books);
         console.debug(this.books);
         res.send(this.books);
     });
 });
+
+app.get("/bookdetail/:id", (req,res)=> {
+    req = req.params.id;
+    console.log("getting reviews");
+    console.log(req);
+    dbReviews.find({book_name: req}).toArray((err,results)=> {
+        if(err) return console.log("error: "+ err);
+        console.log("results: "+ results);
+        res.send(results);
+    })
+})
 
 app.post("/show",(req,res)=> {
     console.log(req.body);

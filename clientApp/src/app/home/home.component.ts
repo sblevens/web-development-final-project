@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private bservice: BookService) { 
     // this.adding_review = false;
     this.books = [];
+    this.getBooks();
   }
 
   ngOnInit(): void {
@@ -32,20 +33,6 @@ export class HomeComponent implements OnInit {
   sort_favorited: boolean = false;
   books: Book[];
   
-  old_books = [
-    {id: 1, name: 'Frog and Toad',author: 'Tom Riddle',rating:5,favorited:false},
-    {id: 2,name: 'Series of Unfortunate Events',author: 'Lemony Snicket',rating:3,favorited:false},
-    {id: 3,name: 'Little Women',author: 'Jo March',rating:5,favorited:false},
-    {id: 4,name: 'Name of the Wind',author: 'Katie Stevens',rating:4,favorited:false},
-    {id: 5,name: 'Twilight',author: 'Stephanie Myers',rating:5,favorited:false},
-    {id: 6,name: 'Harry Potter',author: 'JK Rowl',rating:5,favorited:true},
-    {id: 7,name: 'Percy Jackson',author: 'Ricky Ricky Man',rating:5,favorited:false}
-
-  ];
-  
-  assignBooks(r: Object[]) {
-    let books = r;
-  }
   getBooks(){
     this.bservice.getBooks().subscribe((result: any) => {
       this.books = result;
