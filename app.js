@@ -113,6 +113,17 @@ app.get("/bookdetail/:id", (req,res)=> {
     })
 })
 
+app.get("/reviews/:id",(req,res)=>{
+    req = req.params.id;
+    console.log("getting my reviews");
+    dbReviews.find({review_author: req}).toArray((err,results)=>{
+        if(err) return console.log("error: " + err);
+        console.log("results: " +results);
+        res.send(results);
+    })
+    
+})
+
 app.post("/login", (req,res) => {
     console.log("post login");
     console.log(req.body);

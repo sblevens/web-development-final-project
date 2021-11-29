@@ -27,6 +27,8 @@
 </table>
 
 <button type="button" (click)="addReview()" id="add_review">Add Review</button>
+<button type="button" [routerLink]="['/myreviews']"  id="my_review">See My Reviews</button>
+
 
 <form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">
     <div class="inputs">

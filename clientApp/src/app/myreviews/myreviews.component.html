@@ -1,0 +1,18 @@
+
+<table>
+    <thead>
+        <tr>
+            <th><h1>{{user}}'s Reviews</h1></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of reviews, let i = index">
+            <td>
+                <p>{{r.review}}
+                    <span id="review_stars"><i *ngFor="let i of [].constructor(r.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-r.rating)" class="glyphicon glyphicon-star-empty"></i></span>
+                </p>
+                <span id="author"><em>{{r.review_author}}</em></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

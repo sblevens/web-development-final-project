@@ -10,12 +10,14 @@ import { HomeComponent } from './home/home.component';
 import { SearchBooksPipe } from './pipes/search-books.pipe';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { LoginComponent } from './login/login.component';
+import { MyreviewsComponent } from './myreviews/myreviews.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'detail/:id', component: BookDetailsComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'myreviews', component: MyreviewsComponent}
 ];
 
 @NgModule({
@@ -24,7 +26,8 @@ const routes: Routes = [
     HomeComponent,
     SearchBooksPipe,
     BookDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    MyreviewsComponent
   ],
   imports: [
     BrowserModule,

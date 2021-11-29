@@ -21,6 +21,11 @@ export class BookService {
     return this.http.get('http://localhost:8080/bookdetail/'+id);
   }
 
+  getReviews(user: string){
+    console.log("get reviews for " + user);
+    return this.http.get('http://localhost:8080/reviews/'+user);
+  }
+
   //post a new book
   postBook(b: Book){
 
@@ -47,7 +52,9 @@ export class BookService {
   setUser(user:string){
     this.username = user;
     console.log("set user");
-    
+  }
+  getUser(){
+    return this.username;
   }
 
   register(user: string, pass:string){
