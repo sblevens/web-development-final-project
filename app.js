@@ -181,12 +181,25 @@ function logout(req,res){
 
 app.post("/postBook",(req,res)=>{
     console.log("inserting book");
-    let insert = {author: req.body.author, name: req.body.name, favorited: false, rating:0}
+    let insert = {
+        author: req.body.author, 
+        name: req.body.name, 
+        favorited: false, 
+        rating:0
+    }
     dbBooks.insertOne(insert, (err,result)=>{
         if(err) return console.log("error inserting book: "+ err);
         console.log("inserted book");
     });
     res.send({result:'done'});
+})
+
+app.post("/postReview",(req,res)=>{
+    console.log("inserting review");
+    dbReviews.insertOne(req.body,(err,result)=>{
+        if(err) return console.log("error inserting review: "+ err);
+        console.log("inserted review");
+    })
 })
 
 

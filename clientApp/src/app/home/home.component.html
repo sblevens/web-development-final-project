@@ -35,7 +35,7 @@
     <div class="inputs">
         <label for="book_name">Name:</label>
         <select id="book_name" name="book_name" [(ngModel)]="book_name">
-            <option *ngFor="let book of books">{{book.name}} - {{book.author}}</option>
+            <option *ngFor="let book of books" value="{{book.name}}">{{book.name}} - {{book.author}}</option>
         </select>
     </div>
     <div class="inputs">

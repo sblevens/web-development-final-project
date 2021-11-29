@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book.service';
 import {BookDetail} from '../model/bookDetail';
 
@@ -11,18 +11,23 @@ import {BookDetail} from '../model/bookDetail';
 export class BookDetailsComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute, private bservice: BookService
+    private route: ActivatedRoute, private bservice: BookService, private router: Router
   ) {
     this.display_review = [];
    }
 
   ngOnInit(): void {
+    this.user = this.bservice.getUser();
+    if(!this.user){
+      this.router.navigateByUrl('/login');
+    }
     this.display_name = "";
     this.display_review = [];
     this.getName();
     this.getDisplayReviews();
   }
 
+  user: string = '';
   display_name: string = '';
   display_review: BookDetail[];
 

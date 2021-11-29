@@ -8,6 +8,7 @@
     <tbody>
         <tr *ngFor="let r of reviews, let i = index">
             <td>
+                <h6>{{r.book_name}}</h6>
                 <p>{{r.review}}
                     <span id="review_stars"><i *ngFor="let i of [].constructor(r.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-r.rating)" class="glyphicon glyphicon-star-empty"></i></span>
                 </p>

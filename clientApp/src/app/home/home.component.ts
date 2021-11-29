@@ -3,6 +3,7 @@ import { SearchBooksPipe } from '../pipes/search-books.pipe';
 import {BookService} from '../book.service';
 import {Book} from '../model/book';
 import { BookDetail } from '../model/bookDetail';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +12,21 @@ import { BookDetail } from '../model/bookDetail';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private bservice: BookService) { 
+  constructor(private bservice: BookService, private router: Router) { 
     // this.adding_review = false;
     this.books = [];
     this.getBooks();
   }
 
   ngOnInit(): void {
+    this.user = this.bservice.getUser();
+    if(!this.user){
+      this.router.navigateByUrl('/login');
+    }
     this.sortRating();
   }
 
+  user: string = '';
   search_book: string = '';
   search_author: string = '';
   adding_review = false;
@@ -63,7 +69,9 @@ export class HomeComponent implements OnInit {
   onSubmit() {
     var book: BookDetail;
     book = {book_name: this.book_name, rating: this.book_rating, review: this.book_review, review_author: this.bservice.getUser()};
-    this.bservice.postRating(book)
+    this.bservice.postRating(book).subscribe((result:any)=>{
+      console.log(result);
+    })
     //this.books.push(book);
     this.book_name = '';
     this.book_author = '';

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Book} from './model/book';
 import {map} from 'rxjs/operators';
 import { BookDetail } from './model/bookDetail';
+import { UrlResolver } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +43,18 @@ export class BookService {
   }
 
   //post a rating for a given book
-  postRating(book: BookDetail){
-
+  postRating(b: BookDetail){
+    console.log("posting new review");
+    let body = new URLSearchParams();
+    body.set('book_name',b.book_name);
+    body.set('review',b.review);
+    body.set('rating',b.rating.toString());
+    body.set('review_author',b.review_author);
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
+    }
+    return this.http.post('http://localhost:8080/postReview',body.toString(),options);
+    
   }
 
   login(user: string, pass: string){
