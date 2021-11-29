@@ -9,11 +9,13 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SearchBooksPipe } from './pipes/search-books.pipe';
 import { BookDetailsComponent } from './book-details/book-details.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'},
-  { path: 'detail/:id', component: BookDetailsComponent}
+  { path: 'detail/:id', component: BookDetailsComponent},
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -21,7 +23,8 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     SearchBooksPipe,
-    BookDetailsComponent
+    BookDetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ var bodyparser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
 const app = express();
+var session = require('express-session');
 
 const route = require('./routes/route');
 
@@ -29,6 +30,10 @@ client.connect(err => {
 
 client.connect(err => {
     dbReviews = client.db(DB_NAME).collection("Reviews");
+})
+
+client.connect(err => {
+    dbLogin = client.db(DB_NAME).collection("Users");
 })
 
 // mongoose.set('useNewUrlParser',true);
@@ -67,6 +72,11 @@ app.use(express.urlencoded({
 //static files
 app.use(express.static(path.join(__dirname,'public')));
 
+app.use(session({
+    secret: "Koda is my dog.",
+    resave: true,
+    saveUninitialized: false
+}));
 
 //routes
 app.use('/api', route);
@@ -74,20 +84,22 @@ app.use('/api', route);
 //testing  server
 app.get("/",(req,res)=>{
     console.log("testing");
-    res.send('foobar');
+    if(req.session.userId){
+        console.log("authenticating");
+    }
 });
 
 var books;
 
 app.get("/books",(req,res)=>{
-    console.log("in show");
-    dbBooks.find().toArray((err, results) => {
+        console.log("in show");
+        dbBooks.find().toArray((err, results) => {
         if(err) return console.log("error: " + err);
         this.books = results;
         console.log("books: "+ this.books);
         console.debug(this.books);
         res.send(this.books);
-    });
+        });
 });
 
 app.get("/bookdetail/:id", (req,res)=> {
@@ -100,6 +112,50 @@ app.get("/bookdetail/:id", (req,res)=> {
         res.send(results);
     })
 })
+
+app.post("/login", (req,res) => {
+    console.log("post login");
+    console.log(req.body);
+    //authenticate
+    dbLogin.findOne({username: req.body.user})
+    .then(user => {
+        if(!user){
+            console.log("user not found");
+            res.send({result:"user not found"})
+            logout();
+        } else {
+            if(user.password.localeCompare(req.body.pass)==0){
+                console.log("yes");
+                req.session.userId = user.username;
+                res.send({result:"successful",user: req.session.userId});
+            } else {
+                console.log("incorrect");
+                res.send({result:"invalid data"});
+                logout();
+            }
+        }
+    }).catch(err => {
+        console.log("error ");
+        console.log(err);
+    })
+});
+
+app.get("/logout",(req,res) => {
+    let response = logout(req,res);
+})
+
+function logout(req,res){
+    if(req.session){
+        req.session.destroy(function (err) {
+            if(err){
+                console.log("err logging out: "+ err);
+                return false;
+            }
+            else
+                return true;
+        })
+    }
+}
 
 app.post("/show",(req,res)=> {
     console.log(req.body);

@@ -10,6 +10,8 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
+  username: string = '';
+
   getBooks(){
     return this.http.get('http://localhost:8080/books');
   }
@@ -29,7 +31,32 @@ export class BookService {
 
   }
 
+  login(user: string, pass: string){
+    console.log(user + " " + pass);
+    let body = new URLSearchParams();
+    body.set('user',user);
+    body.set('pass',pass);
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded'),
+      // responseType: "text"
 
+    };
+    return this.http.post('http://localhost:8080/login',body.toString(),options);
+  }
+
+  setUser(user:string){
+    this.username = user;
+    console.log("set user");
+    
+  }
+
+  register(user: string, pass:string){
+    
+  }
+
+  verifyLogin(){
+    return this.http.get('http://localhost:8080/');
+  }
 
 
 }
