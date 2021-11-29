@@ -14,18 +14,35 @@ export class BookService {
 
   username: string = '';
 
-  getBooks(){
-    return this.http.get('http://localhost:8080/books');
+  getBooks(user: string){
+    return this.http.get('http://localhost:8080/books/'+user);
   }
 
-  getBookDetail(id: string){
+  getBookDetail(user: string, id:string){
     console.log(id);
-    return this.http.get('http://localhost:8080/bookdetail/'+id);
+    return this.http.get('http://localhost:8080/bookdetail/'+user+"/"+id);
   }
 
   getReviews(user: string){
     console.log("get reviews for " + user);
     return this.http.get('http://localhost:8080/reviews/'+user);
+  }
+
+  toggleFavorite(fav: boolean, user: string, name: string){
+    let body = new URLSearchParams();
+    let f;
+    if(fav){
+      f = "true";
+    } else {
+      f = "false";
+    }
+    body.set('fav',f);
+    body.set('user',user);
+    body.set('name',name);
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
+    }
+    return this.http.put('http://localhost:8080/updateFavorites',body,options)
   }
 
   //post a new book
@@ -77,6 +94,7 @@ export class BookService {
   getUser(){
     return this.username;
   }
+
 
   register(user: string, pass:string){
     

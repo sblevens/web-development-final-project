@@ -1,7 +1,14 @@
 <table>
     <thead>
         <tr>
-            <th><h1>Reviews</h1><h2>{{display_name}}</h2></th>
+            <th>
+                <div class="half left">
+                    <h1>Reviews</h1><h2>{{display_name}}</h2>
+                </div>
+                <div class="half right">
+                    <input class="right" type="checkbox" id="favorite" name="favorite" (change)="toggleFavorited($event)" [ngModel]="favorited">
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>

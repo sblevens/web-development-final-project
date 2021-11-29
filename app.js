@@ -89,25 +89,56 @@ app.get("/",(req,res)=>{
     }
 });
 
-var books;
 
-app.get("/books",(req,res)=>{
-        dbBooks.find().toArray((err, results) => {
-        if(err) return console.log("error: " + err);
-        this.books = results;
-        res.send(this.books);
-        });
+app.get("/books/:id",(req,res)=>{
+    let b = [];
+    console.log("checking favorites");
+    req = req.params.id;
+    dbLogin.findOne({username:req})
+    .then(user => {
+        if(user){
+            dbBooks.find().toArray((err, results) => {
+                if(err) return console.log("error: " + err);
+                b = results;
+                console.log(b);
+                for(book of b){
+                    if(user.favorites[book.name]){
+                        console.log("is true: "+ book.name);
+                        book.favorited = true;
+                    }
+                }
+                res.send(b);
+            });
+            
+        }
+    })
+    .catch(err =>{
+        console.log("error: "+ err);
+    })
 });
 
-app.get("/bookdetail/:id", (req,res)=> {
-    req = req.params.id;
+
+app.get("/bookdetail/:user/:id", (req,res)=> {
+    req_id = req.params.id;
+    req_user = req.params.user;
+    f = false;
     console.log("getting reviews");
-    console.log(req);
-    dbReviews.find({book_name: req}).toArray((err,results)=> {
+    dbReviews.find({book_name: req_id}).toArray((err,results)=> {
         if(err) return console.log("error: "+ err);
-        console.log("results: "+ results);
-        res.send(results);
-    })
+        dbLogin.findOne({username:req_user}).then(user => {
+            if(user){
+                console.log(user);
+                console.log(req_id);
+                if(user.favorites[req_id]){
+                    console.log("true");
+                    f = true;
+                }
+            }
+            console.log("results: "+ results);
+            res.send({results:results,favorited:f});
+        }).catch(err => {console.log("error: " + err);})
+    });
+
 })
 
 app.get("/reviews/:id",(req,res)=>{
@@ -202,6 +233,21 @@ app.post("/postReview",(req,res)=>{
     })
 })
 
+app.put("/updateFavorites",(req,res)=>{
+    console.log("update fav");
+    let f = false;
+    if(req.body.fav.localeCompare("true")==0){
+        f = true;
+    }
+    console.log(req.body);
+    let query = {};
+    query["favorites."+req.body.name] = f
+    dbLogin.updateOne({username:req.body.user},
+        {
+            $set: query
+        })
+    res.send({result:""});
+})
 
 app.listen(PORT,()=>{
     console.log('Server started at port:'+PORT);

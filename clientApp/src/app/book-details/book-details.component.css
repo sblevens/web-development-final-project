@@ -30,3 +30,21 @@ th {
 #review_stars, #author {
     float: right;
 }
+
+.half {
+    display: inline;
+    width: 50%;
+}
+
+.right {
+    float: right;
+}
+
+.left{
+    float: left;
+}
+
+input {
+    width: 100px;
+    height: 100px;
+}

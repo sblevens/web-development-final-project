@@ -30,12 +30,16 @@ export class BookDetailsComponent implements OnInit {
   user: string = '';
   display_name: string = '';
   display_review: BookDetail[];
+  favorited:boolean = false;
 
 
   getDisplayReviews(){
-    this.bservice.getBookDetail(this.display_name).subscribe((result:any) => {
-      this.display_review = result;
+    this.bservice.getBookDetail(this.user,this.display_name).subscribe((result:any) => {
+      this.display_review = result["results"];
       console.log("display reviews: " +this.display_review);
+      console.log(result["favorited"]);
+      this.favorited = result["favorited"];
+      
     })
 
     ///let reviews = this.all_reviews[this.id-1].reviews;
@@ -48,5 +52,12 @@ export class BookDetailsComponent implements OnInit {
       console.log("this is id: " + this.display_name);
   }
 
-
+  toggleFavorited(e:any){
+    this.favorited = !this.favorited;
+    this.bservice.toggleFavorite(this.favorited,this.user,this.display_name).subscribe((result:any)=>{
+      console.log(result);
+      
+    });
+    
+  }
 }

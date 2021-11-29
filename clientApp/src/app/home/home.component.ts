@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
   constructor(private bservice: BookService, private router: Router) { 
     // this.adding_review = false;
     this.books = [];
-    this.getBooks();
   }
 
   ngOnInit(): void {
@@ -23,6 +22,7 @@ export class HomeComponent implements OnInit {
     if(!this.user){
       this.router.navigateByUrl('/login');
     }
+    this.getBooks();
     this.sortRating();
   }
 
@@ -42,12 +42,13 @@ export class HomeComponent implements OnInit {
   books: Book[];
   
   getBooks(){
-    this.bservice.getBooks().subscribe((result: any) => {
+    this.bservice.getBooks(this.user).subscribe((result: any) => {
       this.books = result;
       console.log("assign b: " + result);
       console.log(JSON.stringify(result));
     });
   }
+
 
   toggleShow(){
     this.adding_review = !this.adding_review;
