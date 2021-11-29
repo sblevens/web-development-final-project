@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Book} from './model/book';
 import {map} from 'rxjs/operators';
+import { BookDetail } from './model/bookDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,20 @@ export class BookService {
 
   //post a new book
   postBook(b: Book){
-
+    console.log("posting new book");
+    console.log(b);
+    
+    let body = new URLSearchParams();
+    body.set('name',b.name);
+    body.set('author',b.author);
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
+    }
+    return this.http.post('http://localhost:8080/postBook',body.toString(), options);
   }
 
   //post a rating for a given book
-  postRating(b: Book, r:string){
+  postRating(book: BookDetail){
 
   }
 

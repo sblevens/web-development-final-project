@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SearchBooksPipe } from '../pipes/search-books.pipe';
 import {BookService} from '../book.service';
 import {Book} from '../model/book';
+import { BookDetail } from '../model/bookDetail';
 
 @Component({
   selector: 'app-home',
@@ -20,11 +21,12 @@ export class HomeComponent implements OnInit {
     this.sortRating();
   }
 
-  new_id: number = 8;
   search_book: string = '';
   search_author: string = '';
   adding_review = false;
+  adding_book = false;
   book_name: string = '';
+  book_name1: string = '';
   book_author: string = '';
   book_rating: number = 1;
   book_review: string = '';
@@ -48,18 +50,39 @@ export class HomeComponent implements OnInit {
   addReview() {
     console.log("test");
     this.adding_review = true;
+    this.adding_book = false;
     console.log(this.adding_review);
   }
 
+  addBook(){
+    this.adding_book = true;
+    this.adding_review = false;
+
+  }
+
   onSubmit() {
-    let book = {id: this.new_id, name: this.book_name, author: this.book_author, rating: this.book_rating, favorited: this.book_favorited};
-    this.books.push(book);
-    this.new_id = this.new_id + 1;
+    var book: BookDetail;
+    book = {book_name: this.book_name, rating: this.book_rating, review: this.book_review, review_author: this.bservice.getUser()};
+    this.bservice.postRating(book)
+    //this.books.push(book);
     this.book_name = '';
     this.book_author = '';
     this.book_rating = 1;
     this.book_review = '';
     this.adding_review = false;
+  }
+
+  onSubmitBook(){
+    var book: Book;
+    book = {name: this.book_name1, author: this.book_author, favorited: false}
+    this.bservice.postBook(book).subscribe((result:any)=>{
+      console.log(result);
+      this.getBooks();
+    });
+
+    this.book_name1 = '';
+    this.book_author = '';
+    this.adding_book = false;
   }
 
   sortRating(){

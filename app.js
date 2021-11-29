@@ -92,12 +92,9 @@ app.get("/",(req,res)=>{
 var books;
 
 app.get("/books",(req,res)=>{
-        console.log("in show");
         dbBooks.find().toArray((err, results) => {
         if(err) return console.log("error: " + err);
         this.books = results;
-        console.log("books: "+ this.books);
-        console.debug(this.books);
         res.send(this.books);
         });
 });
@@ -168,19 +165,29 @@ function logout(req,res){
     }
 }
 
-app.post("/show",(req,res)=> {
-    console.log(req.body);
+// app.post("/show",(req,res)=> {
+//     console.log(req.body);
 
-    db.insertOne(
-        ['test','test1'],
-        (err,result)=> {
-            if(err) {
-                return console.log("error: "+ err);
-            }
-            console.log("success");
-            res.redirect("/show");
-        });
-});
+//     db.insertOne(
+//         ['test','test1'],
+//         (err,result)=> {
+//             if(err) {
+//                 return console.log("error: "+ err);
+//             }
+//             console.log("success");
+//             res.redirect("/show");
+//         });
+// });
+
+app.post("/postBook",(req,res)=>{
+    console.log("inserting book");
+    let insert = {author: req.body.author, name: req.body.name, favorited: false, rating:0}
+    dbBooks.insertOne(insert, (err,result)=>{
+        if(err) return console.log("error inserting book: "+ err);
+        console.log("inserted book");
+    });
+    res.send({result:'done'});
+})
 
 
 app.listen(PORT,()=>{

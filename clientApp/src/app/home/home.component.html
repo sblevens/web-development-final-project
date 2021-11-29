@@ -27,17 +27,16 @@
 </table>
 
 <button type="button" (click)="addReview()" id="add_review">Add Review</button>
+<button type="button" (click)="addBook()" id="add_book">Add Book</button>
 <button type="button" [routerLink]="['/myreviews']"  id="my_review">See My Reviews</button>
 
 
 <form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">
     <div class="inputs">
         <label for="book_name">Name:</label>
-        <input id="book_name" name="book_name" type="text" [(ngModel)]="book_name">
-    </div>
-    <div class="inputs">
-        <label for="book_author">Author:</label>
-        <input id="book_author" name="book_author" type="text" [(ngModel)]="book_author">
+        <select id="book_name" name="book_name" [(ngModel)]="book_name">
+            <option *ngFor="let book of books">{{book.name}} - {{book.author}}</option>
+        </select>
     </div>
     <div class="inputs">
         <label for="book_rating">Rating:</label>
@@ -51,7 +50,19 @@
     </div>
     <div class="inputs">
         <label for="book_review">Review:</label>
-        <input id="book_review" name="book_review" type="textarea" [(ngModel)]="book_review">
+        <textarea id="book_review" name="book_review" [(ngModel)]="book_review"></textarea> 
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<form id="input_review" *ngIf="adding_book" (ngSubmit)="onSubmitBook()">
+    <div class="inputs">
+        <label for="book_name1">Name:</label>
+        <input type="text" id="book_name1" name="book_name1" [(ngModel)]="book_name1">
+    </div>
+    <div class="inputs">
+        <label for="book_author">Author:</label>
+        <input type="text" id="book_author" name="book_author" [(ngModel)]="book_author">
     </div>
     <button type="submit">Submit</button>
 </form>

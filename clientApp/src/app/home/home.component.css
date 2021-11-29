@@ -24,20 +24,20 @@ tr:nth-child(even){
 #input_review label {
     padding: 5px;
     width: 50px;
-    margin-right: 5px;
+    margin-right: 15px;
     display: inline-block;
     text-align: right;
 }
 
-#input_review input {
+/* #input_review input, #input_review select{
     width: 250px;
-}
+} */
 
-#input_review select {
+/* #input_review select {
     width: 100px;
-}
+} */
 
-#input_review input, select {
+#input_review input, #input_review select {
     padding: 10px;
     margin: 6px 0;
     border: 1px solid #aaa;
