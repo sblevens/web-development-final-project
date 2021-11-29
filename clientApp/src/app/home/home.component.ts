@@ -126,8 +126,11 @@ export class HomeComponent implements OnInit {
   }
 
   sortFavorited(){
+    console.log("sorting");
+    
     if(this.sort_favorited){
       this.books.sort((a,b)=>{
+        console.log(a.favorited + " vs " + b.favorited);
         if(a.favorited > b.favorited){
           return 1;
         }

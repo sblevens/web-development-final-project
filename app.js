@@ -105,6 +105,8 @@ app.get("/books/:id",(req,res)=>{
                     if(user.favorites[book.name]){
                         console.log("is true: "+ book.name);
                         book.favorited = true;
+                    } else {
+                        book.favorited = false;
                     }
                 }
                 res.send(b);
