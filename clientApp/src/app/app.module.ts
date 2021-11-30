@@ -11,13 +11,15 @@ import { SearchBooksPipe } from './pipes/search-books.pipe';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { LoginComponent } from './login/login.component';
 import { MyreviewsComponent } from './myreviews/myreviews.component';
+import { TobereadComponent } from './toberead/toberead.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
-  { path: 'detail/:id', component: BookDetailsComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'myreviews', component: MyreviewsComponent}
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'detail/:id', component: BookDetailsComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'myreviews', component: MyreviewsComponent },
+  { path:'toberead', component:TobereadComponent }
 ];
 
 @NgModule({
@@ -27,7 +29,8 @@ const routes: Routes = [
     SearchBooksPipe,
     BookDetailsComponent,
     LoginComponent,
-    MyreviewsComponent
+    MyreviewsComponent,
+    TobereadComponent
   ],
   imports: [
     BrowserModule,

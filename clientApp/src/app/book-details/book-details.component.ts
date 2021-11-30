@@ -31,6 +31,7 @@ export class BookDetailsComponent implements OnInit {
   display_name: string = '';
   display_review: BookDetail[];
   favorited:boolean = false;
+  toBeRead: boolean = false;
 
 
   getDisplayReviews(){
@@ -39,7 +40,7 @@ export class BookDetailsComponent implements OnInit {
       console.log("display reviews: " +this.display_review);
       console.log(result["favorited"]);
       this.favorited = result["favorited"];
-      
+      this.toBeRead = result["toBeRead"];
     })
 
     ///let reviews = this.all_reviews[this.id-1].reviews;
@@ -59,5 +60,13 @@ export class BookDetailsComponent implements OnInit {
       
     });
     
+  }
+
+  toggleToBeRead(e:any){
+    this.toBeRead = !this.toBeRead;
+    this.bservice.toggleToBeRead(this.toBeRead,this.user,this.display_name).subscribe((result:any)=>{
+      console.log(result);
+      
+    });
   }
 }

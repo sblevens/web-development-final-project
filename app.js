@@ -17,7 +17,6 @@ const PORT = process.env.PORT || 8080;
 
 var ObjectId = require("mongodb").ObjectId;
 const { mongo } = require('mongoose');
-// const { db } = require('./models/contact');
 
 const client = new MongoClient(url, {
     useNewUrlParser: true,
@@ -108,6 +107,11 @@ app.get("/books/:id",(req,res)=>{
                     } else {
                         book.favorited = false;
                     }
+                    if(user.toBeRead[book.name]){
+                        book.toBeRead = true;
+                    } else {
+                        book.toBeRead = false;
+                    }
                 }
                 res.send(b);
             });
@@ -119,11 +123,48 @@ app.get("/books/:id",(req,res)=>{
     })
 });
 
+app.get("/toberead/:id",(req,res)=>{
+    req = req.params.id;
+    let b = [];
+    dbLogin.findOne({username:req})
+    .then(user => {
+        if(user){
+            console.log(user.toBeRead);
+            var keys = Object.keys(user.toBeRead);
+            console.log(keys);
+            let query = {};
+            query['$or'] = [];
+            for(var key of keys){
+                var val = user.toBeRead[key];
+                console.log("val: ");
+                console.log(val);
+                if(val){
+                    query['$or'].push({name:key});
+                }
+            }
+            console.log(query);
+
+            dbBooks.find(query).toArray((err,results)=>{
+                console.log("results:");
+                console.log(results);
+                b = results;
+                console.log("sending" + results);
+                res.send(results);
+            });
+
+        }
+    })
+    .catch(err => {
+        console.log("error: "+err);
+    })
+});
+
 
 app.get("/bookdetail/:user/:id", (req,res)=> {
     req_id = req.params.id;
     req_user = req.params.user;
     f = false;
+    r = false;
     console.log("getting reviews");
     dbReviews.find({book_name: req_id}).toArray((err,results)=> {
         if(err) return console.log("error: "+ err);
@@ -135,9 +176,12 @@ app.get("/bookdetail/:user/:id", (req,res)=> {
                     console.log("true");
                     f = true;
                 }
+                if(user.toBeRead[req_id]){
+                    r = true;
+                }
             }
             console.log("results: "+ results);
-            res.send({results:results,favorited:f});
+            res.send({results:results,favorited:f,toBeRead:r});
         }).catch(err => {console.log("error: " + err);})
     });
 
@@ -198,20 +242,6 @@ function logout(req,res){
     }
 }
 
-// app.post("/show",(req,res)=> {
-//     console.log(req.body);
-
-//     db.insertOne(
-//         ['test','test1'],
-//         (err,result)=> {
-//             if(err) {
-//                 return console.log("error: "+ err);
-//             }
-//             console.log("success");
-//             res.redirect("/show");
-//         });
-// });
-
 app.post("/postBook",(req,res)=>{
     console.log("inserting book");
     let insert = {
@@ -250,6 +280,20 @@ app.put("/updateFavorites",(req,res)=>{
         })
     res.send({result:""});
 })
+
+app.put("/updateToBeRead", (req,res)=> {
+    console.log("update to be read");
+    let r = false;
+    if(req.body.toBeRead.localeCompare("true")==0){
+        r = true;
+    }
+    let query = {};
+    query["toBeRead."+req.body.name] = r;
+    dbLogin.updateOne({username:req.body.user}, {
+        $set: query
+    })
+    res.send({results:""});
+});
 
 app.listen(PORT,()=>{
     console.log('Server started at port:'+PORT);

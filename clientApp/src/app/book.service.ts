@@ -28,6 +28,12 @@ export class BookService {
     return this.http.get('http://localhost:8080/reviews/'+user);
   }
 
+  getToBeRead(user: string){
+    console.log("get to be read list for " + user);
+    return this.http.get('http://localhost:8080/toberead/'+user);
+    
+  }
+
   toggleFavorite(fav: boolean, user: string, name: string){
     let body = new URLSearchParams();
     let f;
@@ -43,6 +49,25 @@ export class BookService {
       headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
     }
     return this.http.put('http://localhost:8080/updateFavorites',body,options)
+  }
+
+  toggleToBeRead(toBeRead: boolean, user: string, name: string){
+    let body = new URLSearchParams();
+    let r;
+    if(toBeRead)
+      r = "true";
+    else
+      r = "false";
+    body.set('toBeRead',r);
+    body.set('user',user);
+    body.set('name',name);
+    console.log("body:");
+    console.log(body);
+    
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
+    }
+    return this.http.put('http://localhost:8080/updateToBeRead',body,options);
   }
 
   //post a new book

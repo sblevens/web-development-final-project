@@ -4,4 +4,5 @@ export class Book{
     author!: string;
     rating?: number;
     favorited!: boolean;
+    toBeRead!: boolean;
 }

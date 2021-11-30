@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
 
   onSubmitBook(){
     var book: Book;
-    book = {name: this.book_name1, author: this.book_author, favorited: false}
+    book = {name: this.book_name1, author: this.book_author, favorited: false, toBeRead: false}
     this.bservice.postBook(book).subscribe((result:any)=>{
       console.log(result);
       this.getBooks();
