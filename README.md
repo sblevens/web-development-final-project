@@ -19,13 +19,20 @@ Installation: Below are the npm additions I have installed for this project:
 
 >>npm install cors --save
 
+>>npm install express-session
 
 
-Usage: With no database implemented yet, all we have to do is start the front-end
+Usage: 
+
+To start the front-end:
 Within the ClientApp folder run the following command
 >>ng serve
 
 It will open on http://localhost:4200/
+
+To start the back-end:
+From another terminal window, within the project folder run the following command
+>>node app.js
 
 
 Contributing:
