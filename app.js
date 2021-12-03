@@ -225,9 +225,25 @@ app.post("/login", (req,res) => {
     })
 });
 
+app.post("/register",(req,res)=>{
+    let insert = {
+        username: req.body.user,
+        password: req.body.pass,
+        favorites: [],
+        toBeRead: []
+    }
+    dbLogin.insertOne(insert, (err,results)=>{
+        if(err) return console.log("error: "+ err);
+        console.log("registered");
+        res.send(true);
+    })
+});
+
 app.get("/logout",(req,res) => {
+    console.log("logging out");
     let response = logout(req,res);
-})
+    res.send(response);
+});
 
 function logout(req,res){
     if(req.session){

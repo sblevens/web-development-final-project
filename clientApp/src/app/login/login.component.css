@@ -1,0 +1,69 @@
+.card{
+    background: #fbfbfb;
+    border-radius: 9px;
+    box-shadow: 1px 2px 8px rgba(0,0,0,0.65);
+    height: 450px;
+    width: 300px;
+    margin: 6rem auto 8.1rem auto;
+}
+.card-content{
+    padding: 12px 44px;
+}
+.card-title{
+    letter-spacing: 4px;
+    padding-bottom: 24px;
+    padding-top: 15px;
+    text-align: center;
+}
+
+form{
+    align-items: left;
+    display: flex;
+    flex-direction: column;
+}
+
+#submit-btn{
+    background: linear-gradient(to right,#6ba38c,#95ddbf);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 1px 7px #53775c;
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+#submit-btn:hover{
+    box-shadow: 0px 1px 17px #53775c;
+}
+
+#register-btn{
+    background: linear-gradient(to right,#6b9ca3,#95c3dd);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 1px 7px #627c8d;
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+#register-btn:hover{
+    box-shadow: 0px 1px 17px #537077;
+}
+
+input{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #6d9886;
+    outline: none;
+    /* border-radius: 5px; */
+    border-color: #6d9886;
+    padding-top: 14px;
+    margin-bottom: 9px;
+    background: #fbfbfb;
+    width: 100%;
+}

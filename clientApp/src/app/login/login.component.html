@@ -1,5 +1,24 @@
+<app-nav></app-nav>
 
-<form (ngSubmit)="onSubmit()">
+<div class="card">
+    <div class="card-content">
+        <h2 class="card-title">{{title}}</h2>
+        <form (ngSubmit)="onSubmit()">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" [(ngModel)]="username">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" [(ngModel)]="password">
+            </div>
+            <button id="submit-btn" type="submit">Login</button>
+            <button id="register-btn" type="button" (click)="setRegister()">Register</button>
+        </form>
+    </div>
+</div>
+
+<!-- <form (ngSubmit)="onSubmit()">
     <h2>Login</h2>
     <div>
         <label for="username">Username:</label>
@@ -11,4 +30,4 @@
     </div>
     <button type="submit">Login</button>
     <button type="button">Register</button>
-</form>
+</form> -->

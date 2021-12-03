@@ -1,3 +1,4 @@
+<app-nav [username]="user"></app-nav>
 <h1>Books</h1>
 
 <div>
@@ -28,8 +29,6 @@
 
 <button type="button" (click)="addReview()" id="add_review">Add Review</button>
 <button type="button" (click)="addBook()" id="add_book">Add Book</button>
-<button type="button" [routerLink]="['/myreviews']"  id="my_review">See My Reviews</button>
-<button type="button" [routerLink]="['/toberead']"  id="to_be_read">My to-be-read</button>
 
 
 <form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">

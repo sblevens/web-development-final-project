@@ -12,6 +12,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
 import { LoginComponent } from './login/login.component';
 import { MyreviewsComponent } from './myreviews/myreviews.component';
 import { TobereadComponent } from './toberead/toberead.component';
+import { NavComponent } from './nav/nav.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
     BookDetailsComponent,
     LoginComponent,
     MyreviewsComponent,
-    TobereadComponent
+    TobereadComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

@@ -120,9 +120,23 @@ export class BookService {
     return this.username;
   }
 
+  logout(){
+    this.username = '';
+    return this.http.get('http://localhost:8080/logout');
+  }
+
 
   register(user: string, pass:string){
-    
+    console.log(user + " " + pass);
+    let body = new URLSearchParams();
+    body.set('user',user);
+    body.set('pass',pass);
+    let options: Object = {
+      headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded'),
+      // responseType: "text"
+
+    };
+    return this.http.post('http://localhost:8080/register',body.toString(),options);
   }
 
   verifyLogin(){
