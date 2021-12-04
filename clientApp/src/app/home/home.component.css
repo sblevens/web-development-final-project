@@ -34,11 +34,31 @@ tr:nth-child(even){
 
 
 #input_review label {
-    padding: 5px;
-    width: 50px;
-    margin-right: 15px;
+    /* padding: 5px; */
+    width: 70px;
+    margin-right: 8px;
     display: inline-block;
     text-align: right;
+
+}
+
+#input_review input, select, textarea {
+    width: 350px;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+.modal-btn{
+    padding: 10px;
+    border-radius: 4px;
+    border: thin gray solid;
+    margin-bottom: 10px;
+}
+
+.w3-modal-content{
+    max-width: 600px;
 }
 
 .fa{

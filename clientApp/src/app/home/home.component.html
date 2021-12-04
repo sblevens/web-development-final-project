@@ -72,7 +72,7 @@
                     <label for="book_review">Review:</label>
                     <textarea id="book_review" name="book_review" [(ngModel)]="book_review"></textarea> 
                 </div>
-                <button type="submit">Submit</button>
+                <button class="modal-btn right" type="submit">Submit</button>
             </form>
         </div>
     </div>
@@ -81,6 +81,9 @@
 
 <div id="add_book_modal" class="w3-modal">
     <div class="w3-modal-content">
+        <header class="w3-container">
+            <h2>Add a Book</h2>
+        </header>
         <div class="w3-container">
             <span onclick="document.getElementById('add_book_modal').style.display='none'"
                 class="w3-button w3-display-topright">&times;</span>
@@ -93,7 +96,7 @@
                     <label for="book_author">Author:</label>
                     <input type="text" id="book_author" name="book_author" [(ngModel)]="book_author">
                 </div>
-                <button type="submit">Submit</button>
+                <button class="modal-btn right" type="submit">Submit</button>
             </form>
         </div>
     </div>
