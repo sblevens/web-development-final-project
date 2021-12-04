@@ -28,6 +28,11 @@ export class BookService {
     return this.http.get('http://localhost:8080/reviews/'+user);
   }
 
+  getAvgReviews(name: string){
+    // console.log('getting ratings from book service' )
+    return this.http.get('http://localhost:8080/avg_reviews/'+name);
+  }
+
   getToBeRead(user: string){
     console.log("get to be read list for " + user);
     return this.http.get('http://localhost:8080/toberead/'+user);

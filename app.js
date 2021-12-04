@@ -196,7 +196,16 @@ app.get("/reviews/:id",(req,res)=>{
         res.send(results);
     })
     
-})
+});
+
+app.get("/avg_reviews/:id", (req,res)=> {
+    req = req.params.id;
+    dbReviews.find({book_name: req},{rating:1}).toArray((err,results)=>{
+        if(err) return console.log("error "+err);
+        console.log(results);
+        res.send(results);
+    })
+});
 
 app.post("/login", (req,res) => {
     console.log("post login");

@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(private bservice: BookService, private router: Router) { 
     // this.adding_review = false;
     this.books = [];
+    this.all_ratings = [];
   }
 
   ngOnInit(): void {
@@ -40,15 +41,34 @@ export class HomeComponent implements OnInit {
   sort_ascending: boolean = false;
   sort_favorited: boolean = false;
   books: Book[];
+  all_ratings: number[];
+  avg_ratings: number = 0;
   
   getBooks(){
     this.bservice.getBooks(this.user).subscribe((result: any) => {
       this.books = result;
-      console.log("assign b: " + result);
-      console.log(JSON.stringify(result));
+      for(let [i,book] of this.books.entries()){
+        this.getAvgReviews(book.name).subscribe((result:any)=>{
+          for(let r of result){
+            this.all_ratings.push(parseInt(r.rating));
+          }
+          if(this.all_ratings.length!=0){
+            var ratings = this.all_ratings.reduce((a,b)=> a + b);
+            this.avg_ratings = (ratings/this.all_ratings.length) || 0;
+            this.books[i].rating = Math.ceil(this.avg_ratings);
+            
+          } else {
+            this.book_rating = 0;
+          }
+          this.all_ratings = [];
+        });
+      }
     });
   }
 
+  getAvgReviews(book_name: string){
+    return this.bservice.getAvgReviews(book_name)
+  }
 
   toggleShow(){
     this.adding_review = !this.adding_review;
@@ -82,6 +102,7 @@ export class HomeComponent implements OnInit {
     this.book_review = '';
     this.adding_review = false;
     document.getElementById('add_review_modal')!.style.display='none';
+    this.getBooks();
   }
 
   onSubmitBook(){
