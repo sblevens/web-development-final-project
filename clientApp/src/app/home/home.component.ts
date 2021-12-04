@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   addReview() {
+    document.getElementById('add_review_modal')!.style.display='block'
     console.log("test");
     this.adding_review = true;
     this.adding_book = false;
@@ -62,6 +63,7 @@ export class HomeComponent implements OnInit {
   }
 
   addBook(){
+    document.getElementById('add_book_modal')!.style.display='block';
     this.adding_book = true;
     this.adding_review = false;
 
@@ -79,6 +81,7 @@ export class HomeComponent implements OnInit {
     this.book_rating = 1;
     this.book_review = '';
     this.adding_review = false;
+    document.getElementById('add_review_modal')!.style.display='none';
   }
 
   onSubmitBook(){
@@ -92,6 +95,7 @@ export class HomeComponent implements OnInit {
     this.book_name1 = '';
     this.book_author = '';
     this.adding_book = false;
+    document.getElementById('add_book_modal')!.style.display='none';
   }
 
   sortRating(){

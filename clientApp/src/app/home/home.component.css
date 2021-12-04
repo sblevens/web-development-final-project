@@ -2,7 +2,15 @@ table {
     width: auto;
     text-align: left;
     table-layout: fixed;
-    border: 2px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+}
+
+#content{
+    margin: 0 auto;
+    width: 90%;
 }
 
 td {
@@ -10,14 +18,18 @@ td {
     width: 200px;
 }
 th {
-    background-color: rgb(99, 160, 180);
+    background-color: #6ba38c;
     padding: 5px;
 }
 tr {
-    background-color: lightblue;
+    background-color: #fafafa;
+    border-bottom: thin solid #f6f6f6;
+}
+tr:last-child{
+    border-bottom:none;
 }
 tr:nth-child(even){
-    background-color: rgb(228, 242, 247);
+    background-color: #ebebeb;
 }
 
 
@@ -27,6 +39,31 @@ tr:nth-child(even){
     margin-right: 15px;
     display: inline-block;
     text-align: right;
+}
+
+.fa{
+    vertical-align: bottom;
+}
+
+.add {
+    padding: 5px;
+    margin-right:5px;
+    width:100px;
+    border-radius: 6px;
+    border: thin solid rgb(150, 150, 150);
+    background-color: #6ba38ca6;
+}
+
+.add-content {
+    margin-top: 27px;
+}
+
+.right{
+    float: right;
+}
+
+header{
+    background-color: lightgray;
 }
 
 /* #input_review input, #input_review select{

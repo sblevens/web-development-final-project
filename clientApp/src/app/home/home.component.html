@@ -1,68 +1,100 @@
 <app-nav [username]="user"></app-nav>
-<h1>Books</h1>
 
-<div>
-    <label for="search_book">Book name:</label>
-    <input type="text" name="search_book" placeholder="search books" [(ngModel)]="search_book">
-    <label for="search_author">Book author:</label>
-    <input type="text" name="search_author" placeholder="search author" [(ngModel)]="search_author">
+<div id="content">
+    <h1>Books</h1>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="search_book">Book name:</label>
+            <input class="form-control" type="text" name="search_book" placeholder="search books" [(ngModel)]="search_book">
+        </div>
+        
+        <div class="col-sm-4">
+            <label for="search_author">Book author:</label>
+            <input class="form-control" type="text" name="search_author" placeholder="search author" [(ngModel)]="search_author">
+        </div>
+        <!-- <div class="col-sm-4"></div> -->
+        <div class="col-sm-3 right add-content">
+            <!-- <a><i class="fa fa-plus fa-3x"></i></a> -->
+            <button class="add right w3-button" type="button" (click)="addReview()" id="add_review">Add Review</button>
+            <button class="add right" type="button" (click)="addBook()" id="add_book">Add Book</button>
+        </div>
+    </div>
+    
+    
+
+    <table class="table table-responsive table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Rating <i (click)="sortRating()" *ngIf="!sort_ascending" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortRating()" *ngIf="sort_ascending" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
+                <th>Favorited <i (click)="sortFavorited()" *ngIf="!sort_favorited" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortFavorited()" *ngIf="sort_favorited" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let book of books | searchBooks: search_book:search_author">
+                <td><a routerLink="/detail/{{book.name}}">{{book.name}}</a></td>
+                <td>{{book.author}}</td>
+                <td id="ratings"><i *ngFor="let i of [].constructor(book.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-book.rating)" class="glyphicon glyphicon-star-empty"></i></td>
+                <td><input [(ngModel)]="book.favorited" type="checkbox" disabled></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Rating <i (click)="sortRating()" *ngIf="!sort_ascending" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortRating()" *ngIf="sort_ascending" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
-            <th>Favorited <i (click)="sortFavorited()" *ngIf="!sort_favorited" class="glyphicon glyphicon-sort-by-attributes"></i><i (click)="sortFavorited()" *ngIf="sort_favorited" class="glyphicon glyphicon-sort-by-attributes-alt"></i></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let book of books | searchBooks: search_book:search_author">
-            <td><a routerLink="/detail/{{book.name}}">{{book.name}}</a></td>
-            <td>{{book.author}}</td>
-            <td id="ratings"><i *ngFor="let i of [].constructor(book.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-book.rating)" class="glyphicon glyphicon-star-empty"></i></td>
-            <td><input [(ngModel)]="book.favorited" type="checkbox" disabled></td>
-        </tr>
-    </tbody>
-</table>
+<div id="add_review_modal" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+        <header class="w3-container">
+            <h2>Add a Review</h2>
+        </header>
+        <div class="w3-container">
+            <span onclick="document.getElementById('add_review_modal').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+            <form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">
+                <div class="inputs">
+                    <label for="book_name">Name:</label>
+                    <select id="book_name" name="book_name" [(ngModel)]="book_name">
+                        <option *ngFor="let book of books" value="{{book.name}}">{{book.name}} - {{book.author}}</option>
+                    </select>
+                </div>
+                <div class="inputs">
+                    <label for="book_rating">Rating:</label>
+                    <select [(ngModel)]="book_rating" name="book_rating" id="book_rating">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="inputs">
+                    <label for="book_review">Review:</label>
+                    <textarea id="book_review" name="book_review" [(ngModel)]="book_review"></textarea> 
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<button type="button" (click)="addReview()" id="add_review">Add Review</button>
-<button type="button" (click)="addBook()" id="add_book">Add Book</button>
 
-
-<form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">
-    <div class="inputs">
-        <label for="book_name">Name:</label>
-        <select id="book_name" name="book_name" [(ngModel)]="book_name">
-            <option *ngFor="let book of books" value="{{book.name}}">{{book.name}} - {{book.author}}</option>
-        </select>
+<div id="add_book_modal" class="w3-modal">
+    <div class="w3-modal-content">
+        <div class="w3-container">
+            <span onclick="document.getElementById('add_book_modal').style.display='none'"
+                class="w3-button w3-display-topright">&times;</span>
+            <form id="input_review" *ngIf="adding_book" (ngSubmit)="onSubmitBook()">
+                <div class="inputs">
+                    <label for="book_name1">Name:</label>
+                    <input type="text" id="book_name1" name="book_name1" [(ngModel)]="book_name1">
+                </div>
+                <div class="inputs">
+                    <label for="book_author">Author:</label>
+                    <input type="text" id="book_author" name="book_author" [(ngModel)]="book_author">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-    <div class="inputs">
-        <label for="book_rating">Rating:</label>
-        <select [(ngModel)]="book_rating" name="book_rating" id="book_rating">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
-    <div class="inputs">
-        <label for="book_review">Review:</label>
-        <textarea id="book_review" name="book_review" [(ngModel)]="book_review"></textarea> 
-    </div>
-    <button type="submit">Submit</button>
-</form>
-
-<form id="input_review" *ngIf="adding_book" (ngSubmit)="onSubmitBook()">
-    <div class="inputs">
-        <label for="book_name1">Name:</label>
-        <input type="text" id="book_name1" name="book_name1" [(ngModel)]="book_name1">
-    </div>
-    <div class="inputs">
-        <label for="book_author">Author:</label>
-        <input type="text" id="book_author" name="book_author" [(ngModel)]="book_author">
-    </div>
-    <button type="submit">Submit</button>
-</form>
+</div>
