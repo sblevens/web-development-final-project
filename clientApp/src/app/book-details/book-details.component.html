@@ -10,13 +10,13 @@
                     <h1>Reviews</h1><h2>{{display_name}}</h2>
                 </div>
                 <div class="half"> 
-                    <div class="left m-right">
+                    <div class="right">
                         <label for="favorite">Favorited:</label>
-                        <input  type="checkbox" id="favorite" name="favorite" (change)="toggleFavorited($event)" [ngModel]="favorited">
+                        <input  type="checkbox" class="center" id="favorite" name="favorite" (change)="toggleFavorited($event)" [ngModel]="favorited">
                     </div>
-                    <div class="left" >
+                    <div class="right m-right" >
                         <label for="read">To Be Read List:</label>
-                        <input type="checkbox" id="read" name="read" (change)="toggleToBeRead($event)" [ngModel]="toBeRead">
+                        <input type="checkbox" class="center" id="read" name="read" (change)="toggleToBeRead($event)" [ngModel]="toBeRead">
                     </div>
                     
                 </div>

@@ -7,7 +7,7 @@
         <tr>
             <th>
                 <div>
-                    <h1>To Be Read</h1><h2>{{user}}</h2>
+                    <h1>My To Be Read List</h1>
                 </div>
                 
             </th>
@@ -16,13 +16,13 @@
     <tbody>
         <tr *ngFor="let b of books, let i = index">
             <td>
-                <p>{{b.name}}
-                    <!-- <span id="review_stars"><i *ngFor="let i of [].constructor(b.rating-0)" class="glyphicon glyphicon-star"></i><i *ngFor="let i of [].constructor(5-b.rating)" class="glyphicon glyphicon-star-empty"></i></span> -->
-                </p>
-                <div class="half right">
-                    <input class="right" type="checkbox" id="{{b.name}}" name="toberead" checked (change)="toggleToBeRead($event)">
+                <p><b>{{b.name}}</b></p>
+                <p id="author"> by <em>{{b.author}}</em></p>
+                <div id="right-hand" >
+                    <label id="for_toberead" for="toberead">In To Be Read List:</label>
+                    <input type="checkbox" id="{{b.name}}" name="toberead" checked (change)="toggleToBeRead($event)">
                 </div>
-                <span id="author"><em>{{b.author}}</em></span>
+                
             </td>
         </tr>
     </tbody>
