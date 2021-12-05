@@ -50,6 +50,14 @@ tr:nth-child(even){
     border-radius: 4px;
 }
 
+input:invalid{
+    border: 1px red solid;
+}
+
+.ng-invalid:not(form).ng-touched{
+    border: 1px red solid !important;
+}
+
 .modal-btn{
     padding: 10px;
     border-radius: 4px;

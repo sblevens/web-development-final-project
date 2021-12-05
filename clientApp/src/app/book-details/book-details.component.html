@@ -1,4 +1,7 @@
 <app-nav [username]="user"></app-nav>
+<div id="errors" class="alert alert-danger alert-dismissible" *ngIf="display_error">
+    {{display_error}}    
+</div>
 <table>
     <thead>
         <tr>

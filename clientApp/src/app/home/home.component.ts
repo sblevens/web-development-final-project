@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   adding_review = false;
   adding_book = false;
   book_name: string = '';
-  book_name1: string = '';
+  public book_name1: string = '';
   book_author: string = '';
   book_rating: number = 1;
   book_review: string = '';
@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   books: Book[];
   all_ratings: number[];
   avg_ratings: number = 0;
+  display_error: string = '';
   
   getBooks(){
     this.bservice.getBooks(this.user).subscribe((result: any) => {
@@ -94,6 +95,9 @@ export class HomeComponent implements OnInit {
     book = {book_name: this.book_name, rating: this.book_rating, review: this.book_review, review_author: this.bservice.getUser()};
     this.bservice.postRating(book).subscribe((result:any)=>{
       console.log(result);
+      if(result["errors"]){
+        this.display_error = 'There was an error submitting the review.';
+      }
     })
     //this.books.push(book);
     this.book_name = '';
@@ -110,6 +114,9 @@ export class HomeComponent implements OnInit {
     book = {name: this.book_name1, author: this.book_author, favorited: false, toBeRead: false}
     this.bservice.postBook(book).subscribe((result:any)=>{
       console.log(result);
+      if(result["errors"]){
+        this.display_error = 'There was an error submitting the book.';
+      }
       this.getBooks();
     });
 

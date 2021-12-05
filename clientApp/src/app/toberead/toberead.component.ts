@@ -25,6 +25,7 @@ export class TobereadComponent implements OnInit {
 
   user: string = '';
   books: Book[];
+  display_error: string = '';
 
   getBooks(){
     this.bservice.getToBeRead(this.user).subscribe((result:any)=> {
@@ -56,7 +57,14 @@ export class TobereadComponent implements OnInit {
     console.log(this.books[index].toBeRead);
     this.bservice.toggleToBeRead(this.books[index].toBeRead,this.user,e.target.id).subscribe((result:any)=>{
       console.log(result);
-      
+      if(result["errors"]){
+        if(this.books[index].toBeRead){
+          this.display_error = 'There was an error adding this book to your To Be Read list.';
+        } else {
+          this.display_error = 'There was an error removing this book from your To Be Read list.';
+        }
+        
+      }
     });
   }
 }

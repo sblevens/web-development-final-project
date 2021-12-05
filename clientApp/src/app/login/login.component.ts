@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   title: string = 'LOGIN';
 
   login: boolean = true;
+  display_error: string = '';
 
   ngOnInit(): void {
   }
@@ -28,10 +29,14 @@ export class LoginComponent implements OnInit {
       this.bservice.login(this.username,this.password).subscribe((result:any) => {
         console.log("result: ");
         console.log(result);
-        if(result["result"].localeCompare("successful")==0){
-          console.log("it is successful");
-          this.bservice.setUser(result["user"]);
-          this.router.navigateByUrl("/home");
+        if(result["errors"]){
+          this.display_error = 'Incorrect username or password';
+        } else {
+          if(result["result"].localeCompare("successful")==0){
+            console.log("it is successful");
+            this.bservice.setUser(result["user"]);
+            this.router.navigateByUrl("/home");
+          }
         }
       }) 
     } else {

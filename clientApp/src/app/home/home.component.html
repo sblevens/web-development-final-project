@@ -1,5 +1,8 @@
 <app-nav [username]="user"></app-nav>
 
+<div id="errors" class="alert alert-danger alert-dismissible" *ngIf="display_error">
+    {{display_error}}    
+</div>
 <div id="content">
     <h1>Books</h1>
 
@@ -51,13 +54,15 @@
         <div class="w3-container">
             <span onclick="document.getElementById('add_review_modal').style.display='none'"
         class="w3-button w3-display-topright">&times;</span>
-            <form id="input_review" *ngIf="adding_review" (ngSubmit)="onSubmit()">
+            <form id="input_review_add" *ngIf="adding_review" #input_review_add="ngForm" (ngSubmit)="onSubmit()">
                 <div class="inputs">
                     <label for="book_name">Name:</label>
-                    <select id="book_name" name="book_name" [(ngModel)]="book_name">
+                    <select id="book_nameHTML" name="book_nameHTML" ngModel required [(ngModel)]="book_name" #book_nameHTML="ngModel">
                         <option *ngFor="let book of books" value="{{book.name}}">{{book.name}} - {{book.author}}</option>
                     </select>
                 </div>
+                <p [hidden]="!book_nameHTML.invalid || !book_nameHTML.touched">Book is required.</p>
+
                 <div class="inputs">
                     <label for="book_rating">Rating:</label>
                     <select [(ngModel)]="book_rating" name="book_rating" id="book_rating">
@@ -70,9 +75,10 @@
                 </div>
                 <div class="inputs">
                     <label for="book_review">Review:</label>
-                    <textarea id="book_review" name="book_review" [(ngModel)]="book_review"></textarea> 
+                    <textarea id="book_reviewHTML" name="book_reviewHTML" ngModel required [(ngModel)]="book_review" #book_reviewHTML="ngModel"></textarea> 
                 </div>
-                <button class="modal-btn right" type="submit">Submit</button>
+                <p [hidden]="!book_reviewHTML.invalid || !book_reviewHTML.touched">Review is required.</p>
+                <button [disabled]="input_review_add.invalid" class="modal-btn right" type="submit">Submit</button>
             </form>
         </div>
     </div>
@@ -87,16 +93,18 @@
         <div class="w3-container">
             <span onclick="document.getElementById('add_book_modal').style.display='none'"
                 class="w3-button w3-display-topright">&times;</span>
-            <form id="input_review" *ngIf="adding_book" (ngSubmit)="onSubmitBook()">
+            <form id="input_review" *ngIf="adding_book" #input_review="ngForm" (ngSubmit)="onSubmitBook()">
                 <div class="inputs">
                     <label for="book_name1">Name:</label>
-                    <input type="text" id="book_name1" name="book_name1" [(ngModel)]="book_name1">
+                    <input type="text" id="book_name2" name="book_name2" ngModel required [(ngModel)]="book_name1" #book_name2="ngModel">
                 </div>
+                <p [hidden]="!book_name2.invalid || !book_name2.touched">Book name is required.</p>
                 <div class="inputs">
                     <label for="book_author">Author:</label>
-                    <input type="text" id="book_author" name="book_author" [(ngModel)]="book_author">
+                    <input type="text" id="book_author1" name="book_author1" ngModel required [(ngModel)]="book_author" #book_author1="ngModel">
                 </div>
-                <button class="modal-btn right" type="submit">Submit</button>
+                <p [hidden]="!book_author1.invalid || !book_author1.touched">Author is required.</p>
+                <button [disabled]="input_review.invalid" class="modal-btn right" type="submit">Submit</button>
             </form>
         </div>
     </div>

@@ -1,5 +1,7 @@
 <app-nav></app-nav>
-
+<div id="errors" class="alert alert-danger alert-dismissible" *ngIf="display_error">
+    {{display_error}}    
+</div>
 <div class="card">
     <div class="card-content">
         <h2 class="card-title">{{title}}</h2>

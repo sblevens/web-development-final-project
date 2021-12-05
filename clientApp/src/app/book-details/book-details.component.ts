@@ -32,6 +32,7 @@ export class BookDetailsComponent implements OnInit {
   display_review: BookDetail[];
   favorited:boolean = false;
   toBeRead: boolean = false;
+  display_error: string = '';
 
 
   getDisplayReviews(){
@@ -57,6 +58,14 @@ export class BookDetailsComponent implements OnInit {
     this.favorited = !this.favorited;
     this.bservice.toggleFavorite(this.favorited,this.user,this.display_name).subscribe((result:any)=>{
       console.log(result);
+      if(result["errors"]){
+        if(this.favorited){
+          this.display_error = 'There was an error favoriting this book.';
+        } else {
+          this.display_error = 'There was an error un-favoriting this book.';
+        }
+        
+      }
       
     });
     
@@ -66,7 +75,14 @@ export class BookDetailsComponent implements OnInit {
     this.toBeRead = !this.toBeRead;
     this.bservice.toggleToBeRead(this.toBeRead,this.user,this.display_name).subscribe((result:any)=>{
       console.log(result);
-      
+      if(result["errors"]){
+        if(this.toBeRead){
+          this.display_error = 'There was an error adding this book to your To Be Read list.';
+        } else {
+          this.display_error = 'There was an error removing this book from your To Be Read list.';
+        }
+        
+      }
     });
   }
 }

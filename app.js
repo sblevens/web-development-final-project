@@ -8,6 +8,9 @@ var path = require('path');
 const app = express();
 var session = require('express-session');
 
+const sanitize = require("mongo-sanitize");
+const Validator = require("validatorjs");
+
 const route = require('./routes/route');
 
 const MongoClient = require("mongodb").MongoClient;
@@ -207,45 +210,74 @@ app.get("/avg_reviews/:id", (req,res)=> {
     })
 });
 
+var login_rules = {
+    user: "required",
+    pass: "required"
+};
+
 app.post("/login", (req,res) => {
     console.log("post login");
     console.log(req.body);
-    //authenticate
-    dbLogin.findOne({username: req.body.user})
-    .then(user => {
-        if(!user){
-            console.log("user not found");
-            res.send({result:"user not found"})
-            logout();
-        } else {
-            if(user.password.localeCompare(req.body.pass)==0){
-                console.log("yes");
-                req.session.userId = user.username;
-                res.send({result:"successful",user: req.session.userId});
-            } else {
-                console.log("incorrect");
-                res.send({result:"invalid data"});
+    //sanitize
+    req.body = sanitize(req.body);
+    let validation = new Validator(req.body, login_rules);
+    if(validation.passes()){
+        //authenticate
+        dbLogin.findOne({username: req.body.user})
+        .then(user => {
+            if(!user){
+                console.log("user not found");
+                res.send({errors:"user not found"})
                 logout();
+            } else {
+                if(user.password.localeCompare(req.body.pass)==0){
+                    console.log("yes");
+                    req.session.userId = user.username;
+                    res.send({result:"successful",user: req.session.userId});
+                } else {
+                    console.log("incorrect");
+                    res.send({errors:"invalid data"});
+                    logout();
+                }
             }
-        }
-    }).catch(err => {
-        console.log("error ");
-        console.log(err);
-    })
+        }).catch(err => {
+            console.log("error ");
+            console.log(err);
+        })
+    } else {
+        let errorsList = {
+            user: validation.errors.first("user"),
+            pass: validation.errors.first("pass")
+        };
+        res.send({errors:errorsList});
+    }
+    
 });
 
 app.post("/register",(req,res)=>{
     let insert = {
         username: req.body.user,
         password: req.body.pass,
-        favorites: [],
-        toBeRead: []
+        favorites: {},
+        toBeRead: {}
     }
-    dbLogin.insertOne(insert, (err,results)=>{
-        if(err) return console.log("error: "+ err);
-        console.log("registered");
-        res.send(true);
-    })
+    //sanitize
+    insert = sanitize(insert);
+    let validation = new Validator(req.body, login_rules);
+    if(validation.passes()){
+        dbLogin.insertOne(insert, (err,results)=>{
+            if(err) return console.log("error: "+ err);
+            console.log("registered");
+            res.send(true);
+        })
+    } else {
+        let errorsList = {
+            user: validation.errors.first("user"),
+            pass: validation.errors.first("pass")
+        };
+        res.send({errors:errorsList});
+    }
+    
 });
 
 app.get("/logout",(req,res) => {
@@ -267,57 +299,137 @@ function logout(req,res){
     }
 }
 
+var book_rules = {
+    author: "required",
+    name: "required",
+    rating: "integer|between:1,5"
+};
+
 app.post("/postBook",(req,res)=>{
     console.log("inserting book");
     let insert = {
-        author: req.body.author, 
-        name: req.body.name, 
-        favorited: false, 
+        author: req.body.author.trim(), 
+        name: req.body.name.trim(), 
         rating:0
     }
-    dbBooks.insertOne(insert, (err,result)=>{
-        if(err) return console.log("error inserting book: "+ err);
-        console.log("inserted book");
-    });
-    res.send({result:'done'});
+    //sanitize
+    insert = sanitize(insert);
+    let validation = new Validator(insert, book_rules);
+    if(validation.passes()){
+        dbBooks.insertOne(insert, (err,result)=>{
+            if(err) return console.log("error inserting book: "+ err);
+            console.log("inserted book");
+        });
+        res.send({result:'done'});
+    } else {
+        //error
+        let errorsList = {
+            author: validation.errors.first("author"),
+            name: validation.errors.first("name"),
+            rating: validation.errors.first("rating"),
+        };
+        res.send({errors:errorsList});
+    }
 })
+
+var review_rules = {
+    book_name: "required",
+    rating: "integer|between:1,5",
+    review: "required",
+    review_author: "required"
+};
 
 app.post("/postReview",(req,res)=>{
     console.log("inserting review");
-    dbReviews.insertOne(req.body,(err,result)=>{
-        if(err) return console.log("error inserting review: "+ err);
-        console.log("inserted review");
-    })
+    //sanitize
+    req.body = sanitize(req.body);
+    let validation = new Validator(req.body, review_rules);
+    if(validation.passes()){
+        dbReviews.insertOne(req.body,(err,result)=>{
+            if(err) return console.log("error inserting review: "+ err);
+            console.log("inserted review");
+        })
+    } else {
+        //error
+        let errorsList = {
+            book_name: validation.errors.first("book_name"),
+            review: validation.errors.first("review"),
+            rating: validation.errors.first("rating"),
+            review_author: validation.errors.first("review_author")
+        };
+        res.send({errors:errorsList});
+    }
 })
+
+var fav_rules = {
+    fav: "required",
+    name: "required",
+    user: "required"
+};
 
 app.put("/updateFavorites",(req,res)=>{
     console.log("update fav");
-    let f = false;
-    if(req.body.fav.localeCompare("true")==0){
-        f = true;
+    //sanitize
+    req.body = sanitize(req.body);
+    let validation = new Validator(req.body, fav_rules);
+    if(validation.passes()){
+        let f = false;
+        if(req.body.fav.localeCompare("true")==0){
+            f = true;
+        }
+        console.log(req.body);
+        let query = {};
+        query["favorites."+req.body.name] = f
+        
+        dbLogin.updateOne({username:req.body.user},
+            {
+                $set: query
+            })
+        res.send({result:""});
+    } else {
+        //error
+        let errorsList = {
+            fav: validation.errors.first("fav"),
+            user: validation.errors.first("user"),
+            name: validation.errors.first("name")
+        };
+        res.send({errors:errorsList});
     }
-    console.log(req.body);
-    let query = {};
-    query["favorites."+req.body.name] = f
-    dbLogin.updateOne({username:req.body.user},
-        {
-            $set: query
-        })
-    res.send({result:""});
+    
 })
+
+var toberead_rules = {
+    toBeRead: "required",
+    name: "required",
+    user: "required"
+};
 
 app.put("/updateToBeRead", (req,res)=> {
     console.log("update to be read");
-    let r = false;
-    if(req.body.toBeRead.localeCompare("true")==0){
-        r = true;
+    //sanitize
+    req.body = sanitize(req.body);
+    let validation = new Validator(req.body, toberead_rules);
+    if(validation.passes()){
+        let r = false;
+        if(req.body.toBeRead.localeCompare("true")==0){
+            r = true;
+        }
+        let query = {};
+        query["toBeRead."+req.body.name] = r;
+        dbLogin.updateOne({username:req.body.user}, {
+            $set: query
+        })
+        res.send({results:""});
+    } else {
+        //error
+        let errorsList = {
+            toBeRead: validation.errors.first("toBeRead"),
+            user: validation.errors.first("user"),
+            name: validation.errors.first("name")
+        };
+        res.send({errors:errorsList});
     }
-    let query = {};
-    query["toBeRead."+req.body.name] = r;
-    dbLogin.updateOne({username:req.body.user}, {
-        $set: query
-    })
-    res.send({results:""});
+    
 });
 
 app.listen(PORT,()=>{
