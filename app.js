@@ -302,7 +302,7 @@ function logout(req,res){
 var book_rules = {
     author: "required",
     name: "required",
-    rating: "integer|between:1,5"
+    rating: "integer|between:0,5"
 };
 
 app.post("/postBook",(req,res)=>{
@@ -312,15 +312,30 @@ app.post("/postBook",(req,res)=>{
         name: req.body.name.trim(), 
         rating:0
     }
+    console.log("after trim");
+    console.log(insert.author);
+    console.log(insert.name);
+    console.log(insert.rating);
     //sanitize
     insert = sanitize(insert);
     let validation = new Validator(insert, book_rules);
     if(validation.passes()){
-        dbBooks.insertOne(insert, (err,result)=>{
-            if(err) return console.log("error inserting book: "+ err);
-            console.log("inserted book");
-        });
-        res.send({result:'done'});
+        dbBooks.findOne({$and: [{name: insert.name}, {author:insert.author}]})
+        .then(book => {
+            if(!book){
+                dbBooks.insertOne(insert, (err,result)=>{
+                    if(err) return console.log("error inserting book: "+ err);
+                    console.log("inserted book");
+                });
+                res.send({result:'done'});
+            } else {
+                res.send({exists:true});
+            }
+        })
+        .catch(err => {
+            console.log("err "+ err);
+        })
+        
     } else {
         //error
         let errorsList = {
@@ -334,7 +349,7 @@ app.post("/postBook",(req,res)=>{
 
 var review_rules = {
     book_name: "required",
-    rating: "integer|between:1,5",
+    rating: "integer|between:0,5",
     review: "required",
     review_author: "required"
 };

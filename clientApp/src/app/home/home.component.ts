@@ -116,6 +116,8 @@ export class HomeComponent implements OnInit {
       console.log(result);
       if(result["errors"]){
         this.display_error = 'There was an error submitting the book.';
+      } else if(result["exists"]) {
+        this.display_error = 'This book already exists.';
       }
       this.getBooks();
     });
