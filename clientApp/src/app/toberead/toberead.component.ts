@@ -32,8 +32,10 @@ export class TobereadComponent implements OnInit {
       console.log("getting result:");
       console.log(result);
       this.books = result;
-      for(var b of this.books){
-        b.toBeRead = true;
+      if(this.books){
+        for(var b of this.books){
+          b.toBeRead = true;
+        }
       }
     });
   }
