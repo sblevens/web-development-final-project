@@ -2,7 +2,7 @@
 const express = require('express');
 var mongoose = require('mongoose');
 //need to download these
-var bodyparser = require('body-parser');
+// var bodyparser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
 const app = express();
