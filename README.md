@@ -11,15 +11,14 @@ Table of Contents: N/A
 
 
 Installation: Below are the npm additions I have installed for this project:
->>npm install express --save
-
+>>npm install express
 >>npm install -g @angular/cli
-
->>npm install mongoose --save
-
->>npm install cors --save
-
+>>npm install mongoose
+>>npm install mongodb
+>>npm install cors
 >>npm install express-session
+>>npm install mongo-sanitize
+>>npm install validatorjs
 
 
 Usage: 
