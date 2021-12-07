@@ -77,6 +77,9 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(session({
     secret: "Koda is my dog.",
     resave: true,
+    cookie: {
+        maxAge: 8 * 60 * 60 * 1000
+     }, // 8 hours
     saveUninitialized: false
 }));
 

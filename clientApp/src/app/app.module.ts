@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { MyreviewsComponent } from './myreviews/myreviews.component';
 import { TobereadComponent } from './toberead/toberead.component';
 import { NavComponent } from './nav/nav.component';
+import { SplashComponent } from './splash/splash.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'detail/:id', component: BookDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'myreviews', component: MyreviewsComponent },
-  { path:'toberead', component:TobereadComponent }
+  { path:'toberead', component:TobereadComponent },
+  { path: 'splash', component: SplashComponent}
 ];
 
 @NgModule({
@@ -32,7 +34,8 @@ const routes: Routes = [
     LoginComponent,
     MyreviewsComponent,
     TobereadComponent,
-    NavComponent
+    NavComponent,
+    SplashComponent
   ],
   imports: [
     BrowserModule,

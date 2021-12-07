@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSC 314 Final Project Video</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CPSC 314 Final Project Presentation</h1>
+        <h2>Book Review</h2>
+        <h2>Sami Blevens</h2>
+            <h3 id="date">
+                <script>
+                    document.getElementById("date").innerHTML = new Date().toDateString();
+                </script>
+            </h3>
+            <p>Brief project summary (think WPD1 introduction). You can use this to augment your brief verbal presentation
+                of this part of the presentation.</p>
+    </div>
+    <div class="requirements-list">
+        <h1>Functional Requirements:</h1>
+        <ol>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to see a combined 1-5 rating for a book from all users</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to search for books in the system</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to input their reviews</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to have their reviews saved and view their previous reviews</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to mark books as favorited - front end</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to save books to their profile as favorite reads - back end</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to sort by good/bad reviews</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to read other users reviews</a></p>
+            </li>
+            <li>
+                <p><a [routerLink]="['/home']">Users must be able to add a book to the database if its not in the system</a></p>
+            </li>
+            <li>
+                <a [routerLink]="['/home']">Users must be able to save books to their "to be read" list</a>
+            </li>
+        </ol>
+    </div>
+</body>
+
+</html>
